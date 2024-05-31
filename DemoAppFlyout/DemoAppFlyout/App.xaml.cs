@@ -1,8 +1,4 @@
-﻿using DemoAppFlyout.Services;
-using DemoAppFlyout.Views;
-using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace DemoAppFlyout
 {
@@ -12,8 +8,6 @@ namespace DemoAppFlyout
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new AppShell();
         }
 
