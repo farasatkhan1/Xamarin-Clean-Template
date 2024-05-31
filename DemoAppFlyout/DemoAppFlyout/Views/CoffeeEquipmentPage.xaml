@@ -4,9 +4,12 @@
              x:Class="DemoAppFlyout.Views.CoffeeEquipmentPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label
+                x:Name="CountLabel"
+                Text="You Clicked 0 times"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Button x:Name="ButtonClick"  Text="Count Up" Clicked="onButtonClicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
