@@ -12,16 +12,31 @@ namespace DemoAppFlyout.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CoffeeEquipmentPage : ContentPage
     {
-        int count = 0;
+        
 
         public CoffeeEquipmentPage()
         {
             InitializeComponent();
+            BindingContext = this;
+        }
+
+        int count = 0;
+        string countDisplay = "Click Me!";
+        public string CountDisplay
+        {
+            get => countDisplay;
+            set
+            {
+                if (value == countDisplay) return;
+
+                countDisplay = value;
+                OnPropertyChanged();
+            }
         }
 
         private void onButtonClicked(object sender, EventArgs e) {
             count++;
-            CountLabel.Text = $"You Clicked {count} times.";
+            CountDisplay = $"You Clicked {count} times.";
         }
     }
 }

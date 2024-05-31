@@ -6,7 +6,7 @@
         <StackLayout>
             <Label
                 x:Name="CountLabel"
-                Text="You Clicked 0 times"
+                Text="{Binding CountDisplay}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
             <Button x:Name="ButtonClick"  Text="Count Up" Clicked="onButtonClicked" />
