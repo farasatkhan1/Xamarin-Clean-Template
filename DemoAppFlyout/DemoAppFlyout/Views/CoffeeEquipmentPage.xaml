@@ -2,10 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DemoAppFlyout.Views.CoffeeEquipmentPage"
-             xmlns:viewmodel="clr-namespace:DemoAppFlyout.ViewModels"
-             x:DataType="viewmodel:CoffeeEquipmentViewModel">
+             xmlns:viewmodels="clr-namespace:DemoAppFlyout.ViewModels"
+             x:DataType="viewmodels:CoffeeEquipmentViewModel">
     <ContentPage.BindingContext>
-        <viewmodel:CoffeeEquipmentViewModel/>
+        <viewmodels:CoffeeEquipmentViewModel/>
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
