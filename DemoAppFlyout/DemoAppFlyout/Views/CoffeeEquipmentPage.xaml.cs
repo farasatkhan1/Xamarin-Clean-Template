@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -17,8 +17,11 @@ namespace DemoAppFlyout.Views
         public CoffeeEquipmentPage()
         {
             InitializeComponent();
+            IncreaseCount = new Command(OnIncrease);
             BindingContext = this;
         }
+
+        public ICommand IncreaseCount { get;  }
 
         int count = 0;
         string countDisplay = "Click Me!";
@@ -34,7 +37,8 @@ namespace DemoAppFlyout.Views
             }
         }
 
-        private void onButtonClicked(object sender, EventArgs e) {
+        void OnIncrease()
+        {
             count++;
             CountDisplay = $"You Clicked {count} times.";
         }

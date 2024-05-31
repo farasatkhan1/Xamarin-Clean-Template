@@ -5,11 +5,12 @@
     <ContentPage.Content>
         <StackLayout>
             <Label
-                x:Name="CountLabel"
                 Text="{Binding CountDisplay}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <Button x:Name="ButtonClick"  Text="Count Up" Clicked="onButtonClicked" />
+            <Button 
+                Command="{Binding IncreaseCount}"  
+                Text="Count Up" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
