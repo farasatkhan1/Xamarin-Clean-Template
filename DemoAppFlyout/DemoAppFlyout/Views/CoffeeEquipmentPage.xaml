@@ -5,44 +5,56 @@
              xmlns:viewmodels="clr-namespace:DemoAppFlyout.ViewModels"
              x:DataType="viewmodels:CoffeeEquipmentViewModel"
              xmlns:models="clr-namespace:DemoAppFlyout.Models"
-             x:Name="CoffeePage">
+             x:Name="CoffeePage"
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+             >
     <ContentPage.BindingContext>
         <viewmodels:CoffeeEquipmentViewModel />
     </ContentPage.BindingContext>
     <StackLayout>
-        <ListView 
-            SelectedItem="{Binding SelectedCoffee, Mode=TwoWay}"
-            ItemsSource="{Binding Items}"
-            HasUnevenRows="True"
-            CachingStrategy="RecycleElement"
-            BackgroundColor="Transparent"
-            SeparatorVisibility="None"
-            IsPullToRefreshEnabled="True"
-            IsRefreshing="{Binding IsRefreshing}"
-            RefreshCommand="{Binding RefreshCommand}"
-            >
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="models:Coffee">
-                    <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem
-                                Command="{Binding Source={x:Reference CoffeePage}, Path=BindingContext.FavoriteCommand}"
-                                CommandParameter="{Binding .}"
-                                Text="Favorite" />
-                            <MenuItem Text="Delete" />
-                        </ViewCell.ContextActions>
-                        <Grid Padding="10">
-                            <Frame CornerRadius="20" HasShadow="True">
-                                <StackLayout Orientation="Horizontal" Padding="10">
-                                    <FlexLayout Direction="Row" JustifyContent="SpaceBetween" AlignItems="Center" HorizontalOptions="FillAndExpand">
-                                        <StackLayout Orientation="Horizontal" VerticalOptions="Center">
-                                            <Image Source="{Binding ImageUrl}" WidthRequest="50" HeightRequest="50"/>
-                                            <StackLayout Orientation="Vertical" VerticalOptions="Center">
-                                                <Label Text="{Binding Title}" FontSize="16" />
-                                                <Label Text="{Binding Description}" FontSize="14" TextColor="Gray" />
+        <RefreshView
+            IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+            Command="{Binding RefreshCommand}">
+            <CollectionView
+                ItemSizingStrategy="MeasureAllItems"
+                ItemsLayout="VerticalList"
+                ItemsSource="{Binding Items}"
+                SelectedItem="{Binding SelectedCoffee, Mode=TwoWay}"
+                RemainingItemsThreshold="1"
+                RemainingItemsThresholdReachedCommand="{Binding SelectedCoffee}"
+                SelectionMode="Single"
+             >
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="12">
+                        <Label HorizontalOptions="Center" Text="No coffee" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Coffee">
+                        <SwipeView android:SwipeView.SwipeTransitionMode="Drag">
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CoffeeEquipmentViewModel}}, Path=FavoriteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    BackgroundColor="Orange"
+                                    Text="Favorite" />
+                                    <SwipeItem IsDestructive="True" Text="Delete"
+                                           BackgroundColor="Red"/>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid Padding="10">
+                                <Frame CornerRadius="20" HasShadow="True">
+                                    <StackLayout Orientation="Horizontal" Padding="10">
+                                        <FlexLayout Direction="Row" JustifyContent="SpaceBetween" AlignItems="Center" HorizontalOptions="FillAndExpand">
+                                            <StackLayout Orientation="Horizontal" VerticalOptions="Center">
+                                                <Image Source="{Binding ImageUrl}" WidthRequest="50" HeightRequest="50"/>
+                                                <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                                                    <Label Text="{Binding Title}" FontSize="16" />
+                                                    <Label Text="{Binding Description}" FontSize="14" TextColor="Gray" />
+                                                </StackLayout>
                                             </StackLayout>
-                                        </StackLayout>
-                                        <Button Text="Favorite"
+                                            <Button Text="Favorite"
                                             Command="{
                                                 Binding
                                                 Source={
@@ -56,13 +68,14 @@
                                             CommandParameter="{Binding .}"
                                             HorizontalOptions="End"
                                     />
-                                    </FlexLayout>
-                                </StackLayout>
-                            </Frame>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                        </FlexLayout>
+                                    </StackLayout>
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
     </StackLayout>
 </ContentPage>
