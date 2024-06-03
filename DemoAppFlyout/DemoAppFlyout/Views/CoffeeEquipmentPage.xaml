@@ -3,19 +3,39 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DemoAppFlyout.Views.CoffeeEquipmentPage"
              xmlns:viewmodels="clr-namespace:DemoAppFlyout.ViewModels"
-             x:DataType="viewmodels:CoffeeEquipmentViewModel">
+             x:DataType="viewmodels:CoffeeEquipmentViewModel"
+             xmlns:models="clr-namespace:DemoAppFlyout.Models">
     <ContentPage.BindingContext>
-        <viewmodels:CoffeeEquipmentViewModel/>
+        <viewmodels:CoffeeEquipmentViewModel />
     </ContentPage.BindingContext>
-    <ContentPage.Content>
-        <StackLayout>
-            <Label
-                Text="{Binding CountDisplay}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Button 
-                Command="{Binding IncreaseCount}"  
-                Text="Count Up" />
-        </StackLayout>
-    </ContentPage.Content>
+    <StackLayout>
+        <ListView 
+            ItemsSource="{Binding Items}"
+            HasUnevenRows="True"
+            ItemSelected="ListView_ItemSelected"
+            ItemTapped="ListView_ItemTapped"
+            CachingStrategy="RecycleElement"
+            BackgroundColor="Transparent"
+            SeparatorVisibility="None"
+            IsPullToRefreshEnabled="True"
+            >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:Coffee">
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Frame CornerRadius="20" HasShadow="True">
+                                <StackLayout Orientation="Horizontal" Padding="10">
+                                    <Image Source="{Binding ImageUrl}" WidthRequest="50" HeightRequest="50"/>
+                                    <StackLayout Orientation="Vertical" VerticalOptions="Center">
+                                        <Label Text="{Binding Title}" FontSize="16" />
+                                        <Label Text="{Binding Description}" FontSize="14" TextColor="Gray" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>
