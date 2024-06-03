@@ -18,6 +18,8 @@
             BackgroundColor="Transparent"
             SeparatorVisibility="None"
             IsPullToRefreshEnabled="True"
+            IsRefreshing="{Binding IsRefreshing}"
+            RefreshCommand="{Binding RefreshCommand}"
             >
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:Coffee">

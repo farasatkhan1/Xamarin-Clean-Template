@@ -28,6 +28,48 @@ namespace DemoAppFlyout.ViewModels
                 new Coffee { ImageUrl = image, Title = "Title 9", Description = "Description 9" },
                 new Coffee { ImageUrl = image, Title = "Title 10", Description = "Description 10" },
             };
+
+            RefreshCommand = new Command(OnRefresh);
+        }
+
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set
+            {
+                _isRefreshing = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand RefreshCommand { get; }
+
+        private void OnRefresh()
+        {
+            Device.StartTimer(TimeSpan.FromSeconds(2), () =>
+            {
+                var image = "https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500";
+
+                var newItem = new Coffee
+                {
+                    ImageUrl = image,
+                    Title = "New Title",
+                    Description = "New Description"
+                };
+
+                var newItem2 = new Coffee
+                {
+                    ImageUrl = image,
+                    Title = "New Title 2",
+                    Description = "New Description 2"
+                };
+
+                Items.Insert(0, newItem);
+                Items.Insert(0, newItem2);
+                IsRefreshing = false;
+                return false;
+            });
         }
     }
 }
