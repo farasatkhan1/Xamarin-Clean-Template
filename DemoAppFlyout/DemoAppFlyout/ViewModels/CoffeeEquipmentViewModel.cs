@@ -30,6 +30,26 @@ namespace DemoAppFlyout.ViewModels
             };
 
             RefreshCommand = new Command(OnRefresh);
+            FavoriteCommand = new Command<Coffee>(OnFavorite);
+        }
+
+        Coffee previouslySelected;
+        Coffee selectedCoffee;
+        public Coffee SelectedCoffee
+        {
+            get => selectedCoffee;
+            set
+            {
+                if (value != null)
+                {
+                    Application.Current.MainPage.DisplayAlert("Selected", value.Title, "OK");
+                    previouslySelected = value;
+                    value = null;
+                }
+
+                selectedCoffee = value;
+                OnPropertyChanged();
+            }
         }
 
         private bool _isRefreshing;
@@ -70,6 +90,14 @@ namespace DemoAppFlyout.ViewModels
                 IsRefreshing = false;
                 return false;
             });
+        }
+
+
+        public ICommand FavoriteCommand { get; }
+
+        public void OnFavorite(Coffee coffee)
+        {
+            Application.Current.MainPage.DisplayAlert("Favorite", $"You have favorited {coffee.Title}", "OK");
         }
     }
 }
